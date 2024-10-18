@@ -1,0 +1,42 @@
+[
+  {
+    "Id": 1,
+    "Name": "Tomato"
+  },
+  {
+    "Id": 2,
+    "Name": "Pasta"
+  },
+  {
+    "Id": 3,
+    "Name": "Chicken"
+  },
+  {
+    "Id": 4,
+    "Name": "Basil"
+  },
+  {
+    "Id": 5,
+    "Name": "Garlic"
+  },
+  {
+    "Id": 6,
+    "Name": "Olive Oil"
+  },
+  {
+    "Id": 7,
+    "Name": "Mushroom"
+  },
+  {
+    "Id": 8,
+    "Name": "Cheese"
+  },
+  {
+    "Id": 9,
+    "Name": "Beef"
+  },
+  {
+    "Id": 10,
+    "Name": "Onion"
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "Id": 1,
+    "Name": "Tomato Pasta",
+    "IngredientIds": [
+      1,
+      2,
+      4
+    ]
+  },
+  {
+    "Id": 2,
+    "Name": "Chicken Salad",
+    "IngredientIds": [
+      3,
+      1,
+      5
+    ]
+  },
+  {
+    "Id": 3,
+    "Name": "Garlic Chicken",
+    "IngredientIds": [
+      3,
+      5,
+      6
+    ]
+  },
+  {
+    "Id": 4,
+    "Name": "Mushroom Risotto",
+    "IngredientIds": [
+      7,
+      6,
+      2
+    ]
+  },
+  {
+    "Id": 5,
+    "Name": "Cheese Pizza",
+    "IngredientIds": [
+      8,
+      1,
+      2
+    ]
+  },
+  {
+    "Id": 6,
+    "Name": "Beef Stew",
+    "IngredientIds": [
+      9,
+      10,
+      1
+    ]
+  },
+  {
+    "Id": 7,
+    "Name": "Vegetarian Pasta",
+    "IngredientIds": [
+      1,
+      7,
+      2
+    ]
+  },
+  {
+    "Id": 8,
+    "Name": "Basil Tomato Soup",
+    "IngredientIds": [
+      1,
+      4,
+      5
+    ]
+  },
+  {
+    "Id": 9,
+    "Name": "Onion Quiche",
+    "IngredientIds": [
+      10,
+      8,
+      6
+    ]
+  },
+  {
+    "Id": 10,
+    "Name": "Garlic Bread",
+    "IngredientIds": [
+      5,
+      2,
+      6
+    ]
+  }
+]
