@@ -1,11 +1,8 @@
-﻿using System.Security.Permissions;
-using Stage_1___Recipe_Searching.Interfaces;
+﻿using Stage_1___Recipe_Searching.Interfaces;
 using System.Text.Json;
-using System.Threading.Channels;
 
 public class SearchQuery : ISearchQuery
 {
-
     public List<IngredientClass> Ingredients { get; set; } = new List<IngredientClass>();
     public List<RecipeClass> Recipes { get; set; } = new List<RecipeClass>();
 
@@ -14,7 +11,6 @@ public class SearchQuery : ISearchQuery
         Ingredients = await GetIngredients();
         Recipes = await GetRecipes();
     }
-
     public void InputChoice(string userInput)
     {
         try
@@ -26,7 +22,7 @@ public class SearchQuery : ISearchQuery
             {
                 case "l":
                 case "L":
-                    DisplayRecipes();
+                    DisplayingRecipes();
                     break;
                 case "r":
                 case "R":
@@ -59,7 +55,6 @@ public class SearchQuery : ISearchQuery
         }
 
     }
-
     private void RecipesForContainingSpecifiedIngredients()
     {
         Console.WriteLine();
@@ -78,14 +73,13 @@ Just type the name of the ingredient in!");
             .FindAll(recipe => recipe.IngredientIds.Contains(ingredientUserInput.Id));
 
         Console.WriteLine();
+
         foreach (var recipe in recipes)
-        {
             Console.WriteLine(recipe.Name);
-        }
+        
 
     }
-
-    private void DisplayingIngredients()
+    public void DisplayingIngredients()
     {
         try
         {
@@ -105,12 +99,11 @@ Just type the name of the ingredient in!");
             Console.ReadKey();
         }
     }
-
     private void DisplayIngredientsForSpecifiedRecipe()
     {
         Console.WriteLine("Here are the available recipes");
         Console.WriteLine();
-        DisplayRecipes();
+        DisplayingRecipes();
         Console.WriteLine();
         Console.WriteLine("Write the name of the recipe.");
         Console.WriteLine();
@@ -122,24 +115,21 @@ Just type the name of the ingredient in!");
         foreach (var item in ingredientsFromSpecifiedRecipe)
             Console.WriteLine(item.Name);
     }
-
     private List<IngredientClass> IngredientsFromSpecifiedRecipe(string? userInput)
     {
-        List<RecipeClass> selectedRecipe = Recipes
-            .FindAll(recipe =>
+        List<int> selectedRecipe = Recipes
+            .Find(recipe =>
                 recipe.Name
-                    .Equals(userInput.TrimEnd(), StringComparison.OrdinalIgnoreCase));
-
-        List<int> specificRecipeIds = selectedRecipe
-            .First().IngredientIds;
+                    .Equals(userInput.TrimEnd(), StringComparison.OrdinalIgnoreCase))
+            .IngredientIds;
 
         List<IngredientClass> ingredientsFromSpecifiedRecipe = Ingredients
-            .Where(ingredient => specificRecipeIds
+            .Where(ingredient => selectedRecipe
                 .Contains(ingredient.Id)).ToList();
+
         return ingredientsFromSpecifiedRecipe;
     }
-
-    public void DisplayRecipes()
+    public void DisplayingRecipes()
     {
         try
         {
@@ -159,10 +149,8 @@ Just type the name of the ingredient in!");
             Console.ReadKey();
         }
     }
-
     public async Task<List<IngredientClass>> GetIngredients()
     {
-
         try
         {
             var basePath = AppDomain.CurrentDomain.BaseDirectory;
@@ -177,10 +165,8 @@ Just type the name of the ingredient in!");
             Console.ResetColor();
             Console.ReadKey();
         }
-
         return null;
     }
-
     public async Task<List<RecipeClass>> GetRecipes()
     {
         try
@@ -197,10 +183,6 @@ Just type the name of the ingredient in!");
             Console.ResetColor();
             Console.ReadKey();
         }
-
         return null;
     }
-
-
 }
-
