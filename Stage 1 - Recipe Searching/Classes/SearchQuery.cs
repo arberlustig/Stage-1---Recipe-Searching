@@ -43,13 +43,17 @@ public class SearchQuery : ISearchQuery
         }
         catch (ArgumentNullException e)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(e.ParamName);
+            Console.ResetColor();
             Console.ReadKey();
             Environment.Exit(0);
         }
         catch (ArgumentOutOfRangeException e)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(e.ParamName);
+            Console.ResetColor();
             Console.ReadKey();
             Environment.Exit(0);
         }
@@ -58,12 +62,54 @@ public class SearchQuery : ISearchQuery
 
     private void RecipesForContainingSpecifiedIngredients()
     {
-        throw new NotImplementedException();
+        Console.WriteLine();
+        Console.WriteLine(@"
+You can search for recipes that contain these specified ingredients!
+Just type the name of the ingredient in!");
+        DisplayingIngredients();
+        Console.WriteLine();
+
+        string userInput = Console.ReadLine();
+
+        IngredientClass ingredientUserInput = Ingredients
+            .Find(ingredient => ingredient.Name.Equals(userInput.TrimEnd(), StringComparison.OrdinalIgnoreCase));
+
+        List<RecipeClass> recipes = Recipes
+            .FindAll(recipe => recipe.IngredientIds.Contains(ingredientUserInput.Id));
+
+        Console.WriteLine();
+        foreach (var recipe in recipes)
+        {
+            Console.WriteLine(recipe.Name);
+        }
+
+    }
+
+    private void DisplayingIngredients()
+    {
+        try
+        {
+            if (!Ingredients.Any())
+                throw new ArgumentNullException("List of ingredients is still empty");
+
+            foreach (var ingredient in Ingredients)
+            {
+                Console.WriteLine(@$"{ingredient.Id}. {ingredient.Name}");
+            }
+        }
+        catch (ArgumentNullException ex)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(ex.ParamName);
+            Console.ResetColor();
+            Console.ReadKey();
+        }
     }
 
     private void DisplayIngredientsForSpecifiedRecipe()
     {
         Console.WriteLine("Here are the available recipes");
+        Console.WriteLine();
         DisplayRecipes();
         Console.WriteLine();
         Console.WriteLine("Write the name of the recipe.");
@@ -75,7 +121,6 @@ public class SearchQuery : ISearchQuery
         Console.WriteLine();
         foreach (var item in ingredientsFromSpecifiedRecipe)
             Console.WriteLine(item.Name);
-
     }
 
     private List<IngredientClass> IngredientsFromSpecifiedRecipe(string? userInput)
@@ -83,7 +128,7 @@ public class SearchQuery : ISearchQuery
         List<RecipeClass> selectedRecipe = Recipes
             .FindAll(recipe =>
                 recipe.Name
-                    .Equals(userInput, StringComparison.OrdinalIgnoreCase));
+                    .Equals(userInput.TrimEnd(), StringComparison.OrdinalIgnoreCase));
 
         List<int> specificRecipeIds = selectedRecipe
             .First().IngredientIds;
@@ -99,7 +144,7 @@ public class SearchQuery : ISearchQuery
         try
         {
             if (!Recipes.Any())
-                throw new ArgumentNullException("Liste ist noch leer!");
+                throw new ArgumentNullException("List of recipes is still empty");
 
             foreach (var recipe in Recipes)
             {
@@ -108,7 +153,10 @@ public class SearchQuery : ISearchQuery
         }
         catch (ArgumentNullException ex)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(ex.ParamName);
+            Console.ResetColor();
+            Console.ReadKey();
         }
     }
 
@@ -124,7 +172,10 @@ public class SearchQuery : ISearchQuery
         }
         catch (FileNotFoundException ex)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(ex.Message);
+            Console.ResetColor();
+            Console.ReadKey();
         }
 
         return null;
@@ -132,11 +183,22 @@ public class SearchQuery : ISearchQuery
 
     public async Task<List<RecipeClass>> GetRecipes()
     {
+        try
+        {
+            var basePath = AppDomain.CurrentDomain.BaseDirectory;
+            var jsonFilePath = Path.Combine(basePath, @"..\..\..\FilesWithContentJSON\recipes.json");
+            var jsonString = File.ReadAllText(jsonFilePath);
+            return JsonSerializer.Deserialize<List<RecipeClass>>(jsonString);
+        }
+        catch (FileNotFoundException ex)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(ex.Message);
+            Console.ResetColor();
+            Console.ReadKey();
+        }
 
-        var basePath = AppDomain.CurrentDomain.BaseDirectory;
-        var jsonFilePath = Path.Combine(basePath, @"..\..\..\FilesWithContentJSON\recipes.json");
-        var jsonString = File.ReadAllText(jsonFilePath);
-        return JsonSerializer.Deserialize<List<RecipeClass>>(jsonString);
+        return null;
     }
 
 
