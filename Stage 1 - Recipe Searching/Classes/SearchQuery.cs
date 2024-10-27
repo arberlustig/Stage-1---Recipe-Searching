@@ -12,6 +12,47 @@ public class SearchQuery : ISearchQuery
         Ingredients = await GetIngredients();
         Recipes = await GetRecipes();
     }
+
+    public void InputChoice(string userInput)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(userInput))
+                throw new ArgumentNullException("UserInput must be filled with the initials!");
+
+            switch (userInput)
+            {
+                case "l":
+                case "L":
+                    DisplayRecipes();
+                    break;
+                case "r":
+                case "R":
+                    DisplayIngredientsForRecipe();
+                    break;
+                case "S":
+                case "s":
+                    RecipesForSpecifiedIngredients();
+                    break;
+            }
+        }
+        catch (ArgumentNullException e)
+        {
+            Console.WriteLine(e.ParamName);
+        }
+       
+    }
+
+    private void RecipesForSpecifiedIngredients()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void DisplayIngredientsForRecipe()
+    {
+        throw new NotImplementedException();
+    }
+
     public void DisplayRecipes()
     {
         if(!Recipes.Any())
