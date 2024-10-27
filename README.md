@@ -1,4 +1,4 @@
-Here the following explanation of the application itself and some code explanation because some parts are kinda difficult to understand at first sight. 
+Here is the following explanation of the application itself and some code explanation because some parts are kinda difficult to understand at first sight. 
 I wanted to code the application in such a dynamic way, so if the json are getting extended I don't have to go into the code and change anything.
 
 My task was to code a recipe cookbook that is receiving to files --> "ingredients.json" and "recipes.json"
