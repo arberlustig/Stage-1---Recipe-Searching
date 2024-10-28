@@ -8,8 +8,8 @@ public class SearchQuery : ISearchQuery
 
     public async Task Initialize()
     {
-        Ingredients = await GetIngredients();
-        Recipes = await GetRecipes();
+        Ingredients = await GetIngredients("ingredients.json");
+        Recipes = await GetRecipes("recipes.json");
     }
     public void InputChoice(string userInput)
     {
@@ -149,14 +149,14 @@ Just type the name of the ingredient in!");
             Console.ReadKey();
         }
     }
-    public async Task<List<IngredientClass>> GetIngredients()
+    public async Task<List<IngredientClass>> GetIngredients(string fileName)
     {
         try
         {
             var basePath = AppDomain.CurrentDomain.BaseDirectory;
-            var jsonFilePath = Path.Combine(basePath, @"..\..\..\FilesWithContentJSON\ingredients.json");
-            var jsonString = File.ReadAllText(jsonFilePath);
-            return JsonSerializer.Deserialize<List<IngredientClass>>(jsonString);
+            var jsonFilePath = Path.Combine(basePath, @$"..\..\..\FilesWithContentJSON\{fileName}");
+            var jsonString = File.ReadAllTextAsync(jsonFilePath);
+            return JsonSerializer.Deserialize<List<IngredientClass>>(await jsonString);
         }
         catch (FileNotFoundException ex)
         {
@@ -167,14 +167,14 @@ Just type the name of the ingredient in!");
         }
         return null;
     }
-    public async Task<List<RecipeClass>> GetRecipes()
+    public async Task<List<RecipeClass>> GetRecipes(string fileName)
     {
         try
         {
             var basePath = AppDomain.CurrentDomain.BaseDirectory;
-            var jsonFilePath = Path.Combine(basePath, @"..\..\..\FilesWithContentJSON\recipes.json");
-            var jsonString = File.ReadAllText(jsonFilePath);
-            return JsonSerializer.Deserialize<List<RecipeClass>>(jsonString);
+            var jsonFilePath = Path.Combine(basePath, $@"..\..\..\FilesWithContentJSON\{fileName}");
+            var jsonString = File.ReadAllTextAsync(jsonFilePath);
+            return JsonSerializer.Deserialize<List<RecipeClass>>(await jsonString);
         }
         catch (FileNotFoundException ex)
         {

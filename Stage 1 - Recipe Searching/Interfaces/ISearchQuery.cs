@@ -2,8 +2,8 @@
 
 public interface ISearchQuery
 {
-    public Task<List<IngredientClass>> GetIngredients();
-    public Task<List<RecipeClass>> GetRecipes();
+    public Task<List<IngredientClass>> GetIngredients(string fileName);
+    public Task<List<RecipeClass>> GetRecipes(string fileName);
     void DisplayingRecipes();
     void DisplayingIngredients();
     public void InputChoice(string userInput);
