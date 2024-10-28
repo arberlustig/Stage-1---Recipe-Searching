@@ -12,6 +12,7 @@ namespace Unit_Testing___Recipe_Cookbook
         public void InputChoice_WithNoInput_ShouldReturnInvalidOperationException()
         {
 
+
             string userInput = "";
 
             Assert.Throws<InvalidOperationException>(() => search.InputChoice(userInput));
